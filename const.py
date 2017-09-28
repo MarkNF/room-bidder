@@ -1,0 +1,5 @@
+ENTER_INT = 'must enter an integer'
+ENTER_NUM = 'must enter a number'
+NAME = 'name'
+OCCUPANCY = 'occupancy'
+COST = 'cost'
