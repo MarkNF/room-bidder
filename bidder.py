@@ -12,7 +12,7 @@ print ('''
 
 num_rooms = get_int('number of rooms: ')
 total_price = get_float('total price of apartment: ')
-volitility_factory = total_price * .01
+volitility_factory = total_price * .004
 
 get_input('''
 *****************
@@ -56,7 +56,7 @@ when everyone has made a selection, press ENTER to continue
 		break
 
 	standard_deviation = numpy.std(occupancy_arr)
-	deduction = (volitility_factory * standard_deviation) / empty_rooms
+	deduction = volitility_factory * standard_deviation
 	print('''
 ***********************
 * CALCULATION SUMMARY *
@@ -66,7 +66,7 @@ ${2:.2f} will be deducted from each vacant room and applied
 propotionally to the occupied rooms (vf: {3:.2f})'''.format(
 	empty_rooms, standard_deviation, deduction, volitility_factory))
 
-	volitility_factory = volitility_factory * .95
+	volitility_factory = volitility_factory * .99
 
 	for room in rooms:
 		occupancy = room.get(OCCUPANCY)
@@ -74,4 +74,4 @@ propotionally to the occupied rooms (vf: {3:.2f})'''.format(
 		if room.get(OCCUPANCY) == 0:
 			room[COST] = cost - deduction
 		else:
-			room[COST] = cost + (empty_rooms * deduction * (occupancy/num_rooms))
+			room[COST] = cost + (deduction * empty_rooms * (occupancy/num_rooms))
