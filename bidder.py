@@ -1,4 +1,3 @@
-import numpy
 from utils import get_input, get_int, get_float, output_prices, get_room_summary
 from const import NAME, OCCUPANCY, COST
 
@@ -12,7 +11,7 @@ print ('''
 
 num_rooms = get_int('number of rooms: ')
 total_price = get_float('total price of apartment: ')
-volitility_factory = total_price * .004
+volatility_factory = total_price * .01
 
 get_input('''
 *****************
@@ -48,30 +47,25 @@ when everyone has made a selection, press ENTER to continue
 
 	room_summary = get_room_summary(rooms)
 	empty_rooms = room_summary.get('empty_rooms')
-	occupancy_arr = room_summary.get('occupancy_arr')
 
 	if empty_rooms == 0:
 		get_input('\ngame finished in {0} rounds. here is your summary...'.format(current_round))
 		output_prices(rooms, current_round)
 		break
 
-	standard_deviation = numpy.std(occupancy_arr)
-	deduction = volitility_factory * standard_deviation
 	print('''
 ***********************
 * CALCULATION SUMMARY *
 ***********************
-with {0} empty rooms and a standard deviation of {1:.4f},
-${2:.2f} will be deducted from each vacant room and applied
-propotionally to the occupied rooms (vf: {3:.2f})'''.format(
-	empty_rooms, standard_deviation, deduction, volitility_factory))
-
-	volitility_factory = volitility_factory * .99
+${0:.2f} will be deducted from each vacant room 
+and applied propotionally to the occupied rooms'''.format(volatility_factory))
 
 	for room in rooms:
 		occupancy = room.get(OCCUPANCY)
 		cost = room.get(COST)
 		if room.get(OCCUPANCY) == 0:
-			room[COST] = cost - deduction
+			room[COST] = cost - volatility_factory
 		else:
-			room[COST] = cost + (deduction * empty_rooms * (occupancy/num_rooms))
+			room[COST] = cost + (volatility_factory * empty_rooms * (occupancy/num_rooms)
+
+	volatility_factory = volatility_factory * .97
