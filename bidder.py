@@ -1,5 +1,5 @@
 import numpy
-from utils import get_int, get_float, output_prices, get_room_summary
+from utils import get_input, get_int, get_float, output_prices, get_room_summary
 from const import NAME, OCCUPANCY, COST
 
 print ('''
@@ -14,7 +14,7 @@ num_rooms = get_int('number of rooms: ')
 total_price = get_float('total price of apartment: ')
 volitility_factory = get_float('volitility factor (1% of total price is typically good): ')
 
-input('''
+get_input('''
 *****************
 * INITIAL INPUT *
 *****************
@@ -28,7 +28,7 @@ print('to make things easier, let\'s name the rooms...')
 rooms = []
 for index in range(num_rooms):
 	rooms.append({
-			NAME: input('room #{0}: '.format(index+1)),
+			NAME: get_input('room #{0}: '.format(index+1)),
 			COST: total_price/num_rooms
 		}
 	)
@@ -37,11 +37,11 @@ print('all set, let\'s get going!')
 current_round = 0
 while True:
 	current_round = current_round + 1
-	input('\npress ENTER to calculate the room prices')
+	get_input('\npress ENTER to calculate the room prices')
 
 	output_prices(rooms, current_round)
 
-	input('''
+	get_input('''
 based on this information, each person choose a room
 when everyone has made a selection, press ENTER to continue
 ''')
@@ -51,7 +51,7 @@ when everyone has made a selection, press ENTER to continue
 	occupancy_arr = room_summary.get('occupancy_arr')
 
 	if empty_rooms == 0:
-		input('game finished in {0} rounds. here is your summary...'.format(current_round))
+		get_input('\ngame finished in {0} rounds. here is your summary...'.format(current_round))
 		output_prices(rooms, current_round)
 		break
 
@@ -72,4 +72,3 @@ propotionally to the occupied rooms'''.format(empty_rooms, standard_deviation, d
 			room[COST] = cost - deduction
 		else:
 			room[COST] = cost + (empty_rooms * deduction * (occupancy/num_rooms))
-

@@ -1,16 +1,23 @@
+import sys
 from const import ENTER_INT, ENTER_NUM, NAME, OCCUPANCY, COST
+
+def get_input(message):
+	user_input = input(message).lower().strip()
+	if user_input == 'exit':
+		sys.exit()
+	return user_input
 
 def get_int(message):
 	while True:
 		try:
-			return int(input(message))
+			return int(get_input(message))
 		except ValueError:
 			print(ENTER_INT)
 
 def get_float(message):
 	while True:
 		try:
-			return float(input(message))
+			return float(get_input(message))
 		except ValueError:
 			print(ENTER_NUM)
 
