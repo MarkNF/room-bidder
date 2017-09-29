@@ -12,16 +12,16 @@ print ('''
 
 num_rooms = get_int('number of rooms: ')
 total_price = get_float('total price of apartment: ')
-volitility_factory = get_float('volitility factor (1% of total price is typically good): ')
+volitility_factory = total_price * .01
 
 get_input('''
 *****************
 * INITIAL INPUT *
 *****************
-{0} rooms at a total price of ${1:.2f} with a volitility factor of ${2:.2f}
+{0} rooms at a total price of ${1:.2f}
 if this is not accurate, press CTRL+C and start over
 otherwise, press ENTER to continue
-'''.format(num_rooms, total_price, volitility_factory))
+'''.format(num_rooms, total_price))
 
 print('to make things easier, let\'s name the rooms...')
 
@@ -63,7 +63,10 @@ when everyone has made a selection, press ENTER to continue
 ***********************
 with {0} empty rooms and a standard deviation of {1:.4f},
 ${2:.2f} will be deducted from each vacant room and applied
-propotionally to the occupied rooms'''.format(empty_rooms, standard_deviation, deduction))
+propotionally to the occupied rooms (vf: {3:.2f})'''.format(
+	empty_rooms, standard_deviation, deduction, volitility_factory))
+
+	volitility_factory = volitility_factory * .95
 
 	for room in rooms:
 		occupancy = room.get(OCCUPANCY)
