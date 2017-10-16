@@ -26,46 +26,46 @@ print('to make things easier, let\'s name the rooms...')
 
 rooms = []
 for index in range(num_rooms):
-	rooms.append({
-			NAME: get_input('room #{0}: '.format(index+1)),
-			COST: total_price/num_rooms
-		}
-	)
+    rooms.append({
+            NAME: get_input('room #{0}: '.format(index+1)),
+            COST: total_price/num_rooms
+        }
+    )
 
 print('all set, let\'s get going!')
 current_round = 0
 while True:
-	current_round = current_round + 1
-	get_input('\npress ENTER to calculate the room prices')
+    current_round = current_round + 1
+    get_input('\npress ENTER to calculate the room prices')
 
-	output_prices(rooms, current_round)
+    output_prices(rooms, current_round)
 
-	get_input('''
+    get_input('''
 based on this information, each person choose a room
 when everyone has made a selection, press ENTER to continue
 ''')
 
-	room_summary = get_room_summary(rooms)
-	empty_rooms = room_summary.get('empty_rooms')
+    room_summary = get_room_summary(rooms)
+    empty_rooms = room_summary.get('empty_rooms')
 
-	if empty_rooms == 0:
-		get_input('\ngame finished in {0} rounds. here is your summary...'.format(current_round))
-		output_prices(rooms, current_round)
-		break
+    if empty_rooms == 0:
+        get_input('\ngame finished in {0} rounds. here is your summary...'.format(current_round))
+        output_prices(rooms, current_round)
+        break
 
-	print('''
+    print('''
 ***********************
 * CALCULATION SUMMARY *
 ***********************
 ${0:.2f} will be deducted from each vacant room 
 and applied propotionally to the occupied rooms'''.format(volatility_factory))
 
-	for room in rooms:
-		occupancy = room.get(OCCUPANCY)
-		cost = room.get(COST)
-		if room.get(OCCUPANCY) == 0:
-			room[COST] = cost - volatility_factory
-		else:
-			room[COST] = cost + (volatility_factory * empty_rooms * (occupancy/num_rooms)
+    for room in rooms:
+        occupancy = room.get(OCCUPANCY)
+        cost = room.get(COST)
+        if room.get(OCCUPANCY) == 0:
+            room[COST] = cost - volatility_factory
+        else:
+            room[COST] = cost + (volatility_factory * empty_rooms * (occupancy/num_rooms))
 
-	volatility_factory = volatility_factory * .97
+    volatility_factory = volatility_factory * .97
